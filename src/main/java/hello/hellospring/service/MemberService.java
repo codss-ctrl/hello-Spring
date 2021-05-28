@@ -1,16 +1,16 @@
-package hello_spring.hello_spring.service;
+package hello.hello_spring.service;
 
-import hello_spring.hello_spring.domain.Member;
-import hello_spring.hello_spring.repository.MemberRepository;
+import hello.hello_spring.repository.MemberRepository;
+import hello.hello_spring.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
-@Component
+//@Service
+//@Component
+@Transactional //jpa는 모든 변경이 트랜잭션 안에서 실행되어야 함
 public class MemberService {
 
     private final MemberRepository memberRepository;

@@ -1,8 +1,7 @@
-package hello_spring.hello_spring.controller;
+package hello.hello_spring.controller;
 
-import hello_spring.hello_spring.domain.Member;
-import hello_spring.hello_spring.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
+import hello.hello_spring.service.MemberService;
+import hello.hello_spring.domain.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,7 @@ public class MemberController {
     private final MemberService memberService;
 
 //    스프링 컨테이너에서 memberService 가져와서 연결
-    @Autowired
+//    @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }

@@ -1,7 +1,7 @@
-package hello_spring.hello_spring.service;
+package hello.hello_spring.service;
 
-import hello_spring.hello_spring.domain.Member;
-import hello_spring.hello_spring.repository.MemoryMemberRepository;
+import hello.hello_spring.domain.Member;
+import hello.hello_spring.repository.MemoryMemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
