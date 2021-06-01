@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+	
+	<bean id="hello" class="ddit.di.xml.Hello">
+		<!-- setName(name) mapping -->
+		<property name="name" value="Spring"/>
+		<!-- setPrinter(printer) mapping -->
+		<property name="printer" ref="printer"/>
+	</bean>
+	
+	<bean id="printer" class="ddit.di.xml.StringPrinter"/>
+	<bean id="consolePrinter" class="ddit.di.xml.ConsolePrinter"/>
+
+</beans>

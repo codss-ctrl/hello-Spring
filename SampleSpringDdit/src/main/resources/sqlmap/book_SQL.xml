@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+namespace 항목 : 쿼리가 여러개일때 이름 공간(namespace)을 분리하는 역할.
+	.XML 파일은 보통 여러개 생성되므로 이를 구분하기 위한 용도로 사용함
+ -->
+<mapper namespace="book">
+	<resultMap id="bookVo" type="kr.or.ddit.BOOKVo">
+		<result column="BOOK_ID" property="bookId" />
+		<result column="TITLE" property="title" />
+		<result column="CATEGORY" property="category" />
+		<result column="PRICE" property="price" />
+		<result column="INSERT_DATE" property="insertDate" />
+	</resultMap>
+	<!-- 
+	map.get("title") => "제목"
+	map.get("category") => "소설"
+	마이바티스는 Query가 실행될 때 파라미터를 치환함(키를 값으로 자동 변환)
+	* CDATA : 태그를 태그로 인식하지 않음
+	 -->
+	<insert id="insert" parameterType="hashMap">
+		<selectKey order="BEFORE" keyProperty="bookId" resultType="int">
+		SELECT NVL(MAX(BOOK_ID),0)+1 FROM BOOK
+		</selectKey>
+	<![CDATA[
+	INSERT INTO BOOK(BOOK_ID,TITLE,CATEGORY,PRICE,INSERT_DATE)
+	VALUES(#{bookId},#{title},#{category},#{price},SYSDATE)
+	]]>
+	</insert>
+	<!-- 
+	resultType : SELECT 문이 실행된 후 반환값을 담을 컨테이너 타입
+	-->
+	<select id="select_detail" 
+	parameterType="hashMap" resultType="hashMap">
+	SELECT BOOK_ID, TITLE, CATEGORY, PRICE, INSERT_DATE FROM BOOK 
+	WHERE  BOOK_ID = #{bookId} 
+	</select>
+	
+	<select id="select_detailVo" 
+	parameterType="hashMap" resultMap="bookVo">
+	SELECT BOOK_ID, TITLE, CATEGORY, PRICE, INSERT_DATE FROM BOOK 
+	WHERE  BOOK_ID = #{bookId} 
+	</select>
+	<!-- {"bookId":6,"title":"만화책2","category":"만화2","price","20000"} -->
+	<update id="edit" parameterType="hashMap">
+	UPDATE BOOK
+	SET    TITLE = #{title}, CATEGORY = #{category}, PRICE = #{price}
+	WHERE  BOOK_ID = #{bookId}
+	</update>
+	<!-- {"bookId":6} -->
+	<delete id="remove" parameterType="hashMap">
+	DELETE FROM BOOK
+	WHERE  BOOK_ID = #{bookId}
+	</delete>
+	<!-- DESC : DESCENDING(내림) / ASC : ASCENDING(오름) -->
+	<!-- /list?selOpt=category&keyword=소설 -->
+	<select id="select_list" parameterType="hashMap" resultType="hashMap">
+	SELECT BOOK_ID,	TITLE,	CATEGORY,	PRICE,	INSERT_DATE
+	FROM   BOOK
+	WHERE  1 = 1
+	<if test="selOpt!=null and selOpt!=''">
+		<choose>
+			<when test='selOpt.equals("title")'>
+				AND    TITLE LIKE '%' || #{keyword} || '%'
+			</when>
+			<when test='selOpt.equals("category")'>
+				AND    CATEGORY LIKE '%' || #{keyword} || '%'
+			</when>
+			<otherwise>
+				AND 	PRICE = #{keyword}
+			</otherwise>
+		</choose>
+	</if>
+	ORDER BY INSERT_DATE DESC
+	</select>
+
+</mapper>
+
+
+
+

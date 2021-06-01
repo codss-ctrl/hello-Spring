@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- 외부 연동 관련 정보(데이터베이스에 접속하기 위한 정보 설정) -->
+	<!-- for oracle -->
+	<!-- 
+	dataSource? 데이터베이스와 관련된 정보
+	- url : 데이터베이스 접속 정보(thin드라이버를 사용)
+	-->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="jspexam" />
+		<property name="password" value="java" />
+	</bean>
+	<!-- 
+	sqlSessionFactory? 데이터베이스와 연결하고 닫힐 때가지의 life cycle을 관리하는
+				sqlSession 객체를 만드는 공장
+		1) dataSource : 데이터소스를 설정
+		2) mapperLocations : mapper 파일의 위치.
+			mapper파일? 실제로 Query 내용이 담겨있는 파일
+			/sqlmap/**/*_SQL.xml? /src/main/resources/sqlmap/패키지 명으로
+				시작하고 _SQL.xml로 끝나는 파일들을 mapper 파일로 쓰겠다고
+				스프링에게 알려줌
+	-->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" 
+			value="classpath:/sqlmap/**/*.xml" />
+	</bean>
+	<!-- 
+	sqlSessionTemplate : 데이터베이스에 개별적으로 Query를 실행시키는 객체.
+			sqlSessionTemplate를 소스코드에 사용해서 Query를 실행
+	-->
+	<bean id="sqlSessionTemplate"
+	 	class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	<!-- 
+	sqlSessionTemplate 빈은 sqlSessionFactory 객체를 생성자로 받음.
+	sqlSessionTemplate 객체는 sqlSession 객체가 가지고 있는
+	데이터베이스 접속 정보와 매퍼 파일의 위치를 알 수 있게 됨.
+	-->
+</beans>
+
+
+
+
+
+
+

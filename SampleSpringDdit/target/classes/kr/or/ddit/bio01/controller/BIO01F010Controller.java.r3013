@@ -1,0 +1,10 @@
+package kr.or.ddit.bio01.controller;
+
+import org.springframework.stereotype.Controller;
+
+//Controller 어노테이션 : 스프링이 브라우저의 요청을 받아들이는 컨트롤러라고 인지.
+//자바 빈으로 등록해서 관리
+@Controller
+public class BIO01F010Controller {
+	
+}

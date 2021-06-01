@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+namespace 항목 : 쿼리가 여러개일때 이름 공간(namespace)을 분리하는 역할.
+	.XML 파일은 보통 여러개 생성되므로 이를 구분하기 위한 용도로 사용함
+ -->
+<mapper namespace="BIO01F010Mapper">
+	
+
+</mapper>
+
+
+
+
