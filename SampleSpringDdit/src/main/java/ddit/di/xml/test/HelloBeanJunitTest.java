@@ -3,6 +3,8 @@ package ddit.di.xml.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -21,24 +23,23 @@ public class HelloBeanJunitTest {
 		//1.ApplicationContext 객체 생성
 		context = new GenericXmlApplicationContext("config/beans.xml");
 	}
-	@Test
-	public void test3() {
-		Hello hello = (Hello)context.getBean("hello");
-		Hello hello2 = (Hello)context.getBean("hello");
-		
-		//스프링은 빈 객체를 싱클톤으로 관리
-		assertSame(hello, hello2);
-		
-	}
 	
-	@Test @Ignore
+	@Test 
 	public void test1() {
 		//2.getBean() 호출
-		Hello hello = (Hello)context.getBean("hello");
+		Hello hello = (Hello)context.getBean("hello2");
 		//3. Hello의 sayHello() 호출
 		assertEquals("Hello Spring", hello.sayHello());
 		//4.Hello의 printer() 호출
 		hello.print();
+		
+		
+		//list DI
+		assertEquals(3,  hello.getNames().size());
+		List<String> list = hello.getNames();
+		for(String value : list) {
+			System.out.println(value);
+		}	
 		
 		//StringPrinter getBean()
 		Printer printer = (Printer)context.getBean("printer");

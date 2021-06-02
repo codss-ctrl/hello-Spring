@@ -1,4 +1,4 @@
-package ddit.di.xml;
+package ddit.di.annot;
 
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,8 @@
-package ddit.di.xml;
+package ddit.di.annot;
 
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,11 +11,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Hello {
-	@Value("Spring")
+	@Value("${myname") //properties 이용
+//	@Value("Spring") //어노테이션 스캔
 	private String name;
 	
-	@Autowired
-	@Qualifier("stringPrinter")
+//	@Autowired //어노테이션 스캔
+//	@Qualifier("stringPrinter")
+	@Resource(name="${printer1}")
 	private Printer printer;
 	
 	//컬렉션 타입 DI -List

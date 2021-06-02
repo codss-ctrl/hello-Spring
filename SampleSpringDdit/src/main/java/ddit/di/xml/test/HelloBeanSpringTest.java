@@ -3,6 +3,10 @@ package ddit.di.xml.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
+import java.util.Iterator;
+import java.util.List;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +30,12 @@ public class HelloBeanSpringTest {
 				+ "Spring", hello.sayHello());
 		hello.print();
 		
-		assertEquals(context.getBean("printer").toString(), "Hello Spring");
-		
-		Hello hello2 = context.getBean("hello",Hello.class);
+		Hello hello2 = (Hello)context.getBean("hello");
 		hello2.print();
+		//스프링은 빈 객체를 싱클톤으로 관리
 		assertSame(hello, hello2);
+
+		
+		
 	}
 }
